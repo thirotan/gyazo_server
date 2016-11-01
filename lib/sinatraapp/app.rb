@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require 'sinatra/base'
 require 'sinatra/contrib'
 require 'erubis'
 
-require 'sinatraapp/model'
+
+require 'sinatraapp/config'
 require 'sinatraapp/helper'
 
 module SinatraApp
@@ -21,9 +24,10 @@ module SinatraApp
       include SinatraApp::Helper
     end
 
-    def database
-      @database ||= SintaraApp::Model.new
+    def config
+      @config ||= SintaraApp::Config.new
     end
+
 
     not_bound do 
       status 404
@@ -33,5 +37,23 @@ module SinatraApp
     get '/' do
       erb :index
     end
+
+    get '/images/:dir/:name' do
+      send_file File.join(config.basedir, 'images',  params[:dir], params[:name])
+    end
+
+    post '/upload' do
+      dirname = config.dirname 
+      filename = config.filename
+      path = config.path(filename: filename)
+      config.mkdir(path: path)
+      FileUtils.cp(request[:image][:uploadfile].path, path)
+  
+      status 200
+      headers 'Content-Type' => 'text/plain'
+      body "#{config.url}/images/#{filename}"
+    end
+
+    
   end
 end

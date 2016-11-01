@@ -1,10 +1,4 @@
 ---
-production:
-  dsn: mysql://www:wwwd@localhost/gist
-development:
-  dsn: sqlite://sql/development.sqlite
-test:
-  dsn: sqlite://sql/test.sqlite
-admin:
-  user: admin_username
-  pass: admin_password
+server:
+  url: gyazo.thirotan.com
+  basedir: /home/www/gyazo_server/images
