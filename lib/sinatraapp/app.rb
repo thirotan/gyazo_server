@@ -20,7 +20,7 @@ module SinatraApp
       use Rack::CommonLogger, file
     end
 
-    error UploadError do
+    error 500 do
       status 500
     end
 
@@ -33,7 +33,7 @@ module SinatraApp
     end
 
 
-    not_bound do 
+    not_found do 
       status 404
       erb :error_404
     end
@@ -47,7 +47,7 @@ module SinatraApp
     end
 
     post '/upload' do
-      raise UploadError unless request.env['HTTP_USER_AGENT'] == config.ua
+      500 unless request.env['HTTP_USER_AGENT'] == config.ua
       dirname = config.dirname 
       filename = config.filename
       path = config.path(filename: filename)
