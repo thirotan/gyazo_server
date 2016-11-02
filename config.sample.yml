@@ -2,3 +2,5 @@
 server:
   url: SERVER_URL
   basedir: SERVER_IMAGE_BASEDIR
+client:
+  ua: CLIENT_USER_AGENT

@@ -6,12 +6,13 @@ require 'digest'
 
 module SinatraApp
   class Config
-    attr_reader :url, :basedir
+    attr_reader :url, :basedir, :ua
 
     CONFIGYAML = YAML.load_file(File.dirname(__FILE__) + '/../../config.yml')
     def initialize
       url = CONFIGYAML['serevr']['url']
       basedir = CONFIGYAML['serever']['basedir']
+      ua = CONFIGYAML['client']['ua']
     end
 
     def dirname
