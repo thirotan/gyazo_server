@@ -3,4 +3,5 @@ Gemfile.lock
 .bundle
 config.yml
 coverage
+logs
 

@@ -22,6 +22,7 @@ module SinatraApp
 
     error 500 do
       status 500
+      'unk'
     end
 
     helpers do
