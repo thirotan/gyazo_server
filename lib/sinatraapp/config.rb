@@ -3,20 +3,22 @@
 require 'date'
 require 'fileutils'
 require 'digest'
+require 'yaml'
 
 module SinatraApp
   class Config
     attr_reader :url, :basedir, :ua
 
-    CONFIGYAML = YAML.load_file(File.dirname(__FILE__) + '/../../config.yml')
     def initialize
-      url = CONFIGYAML['serevr']['url']
-      basedir = CONFIGYAML['serever']['basedir']
-      ua = CONFIGYAML['client']['ua']
+      config = YAML.load_file(File.dirname(__FILE__) + '/../../config.yml')
+      @url = config['server']['url']
+      @basedir = config['server']['basedir']
+      @ua = config['client']['ua']
     end
 
     def dirname
-      Date.today.srtftime("%y%m%d")
+      puts 'dirname'
+      Date.today.strftime("%y%m%d")
     end
 
     def make_dir(path:)
@@ -27,11 +29,13 @@ module SinatraApp
     end
 
     def filename
+      puts 'filename'
       md5 = Digest::MD5.new
       md5.update((Time.now.to_i + :gyazo.object_id + rand(2^16)).to_s).hexdigest + '.png'
     end
 
     def path(filename:)
+      puts 'path'
       File.join(basedir, dirname, filename)
     end
 

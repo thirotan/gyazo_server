@@ -2,6 +2,6 @@ vendor
 Gemfile.lock
 .bundle
 config.yml
-coverage
-logs
+coverage/*
+logs/*
 

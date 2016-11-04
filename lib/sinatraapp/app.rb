@@ -22,7 +22,6 @@ module SinatraApp
 
     error 500 do
       status 500
-      'unk'
     end
 
     helpers do
@@ -30,7 +29,7 @@ module SinatraApp
     end
 
     def config
-      @config ||= SintaraApp::Config.new
+      config ||= SintaraApp::Config.new
     end
 
 
@@ -48,18 +47,16 @@ module SinatraApp
     end
 
     post '/upload' do
-      500 unless request.env['HTTP_USER_AGENT'] == config.ua
-      dirname = config.dirname 
+      #500 unless request.env['HTTP_USER_AGENT'] == config.ua
       filename = config.filename
       path = config.path(filename: filename)
-      config.mkdir(path: path)
-      FileUtils.cp(request[:image][:uploadfile].path, path)
+      config.make_dir(path: path)
+      #FileUtils.cp(request[:image][:uploadfile].path, path)
   
       status 200
-      headers 'Content-Type' => 'text/plain'
-      body "#{config.url}/images/#{filename}"
+      #headers 'Content-Type' => 'text/plain'
+      #body "#{config.url}/images/#{filename}"
     end
 
-    
   end
 end
