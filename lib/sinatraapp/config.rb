@@ -17,7 +17,6 @@ module SinatraApp
     end
 
     def dirname
-      puts 'dirname'
       Date.today.strftime("%y%m%d")
     end
 
@@ -29,13 +28,11 @@ module SinatraApp
     end
 
     def filename
-      puts 'filename'
       md5 = Digest::MD5.new
       md5.update((Time.now.to_i + :gyazo.object_id + rand(2^16)).to_s).hexdigest + '.png'
     end
 
     def path(filename:)
-      puts 'path'
       File.join(basedir, dirname, filename)
     end
 

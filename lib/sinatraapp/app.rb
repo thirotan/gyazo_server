@@ -29,7 +29,11 @@ module SinatraApp
     end
 
     def config
-      config ||= SintaraApp::Config.new
+      config ||= SinatraApp::Config.new
+    end
+
+    def upload(upload_file:, path:)
+      FileUtils.cp(upload_file, path)
     end
 
 
@@ -47,15 +51,14 @@ module SinatraApp
     end
 
     post '/upload' do
-      #500 unless request.env['HTTP_USER_AGENT'] == config.ua
       filename = config.filename
       path = config.path(filename: filename)
       config.make_dir(path: path)
-      #FileUtils.cp(request[:image][:uploadfile].path, path)
+      upload(upload_file: request[:imagedata][:tempfile].path, path: path)
   
       status 200
-      #headers 'Content-Type' => 'text/plain'
-      #body "#{config.url}/images/#{filename}"
+      headers 'Content-Type' => 'text/plain'
+      body "#{config.url}/images/#{filename}"
     end
 
   end
