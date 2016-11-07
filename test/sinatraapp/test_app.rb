@@ -25,9 +25,6 @@ class TestApplication < SinatraApp::Test
   end
 
   def test_post_success_the_image
-    flexmock(config).should_receive(:dirname).returns('161104')
-    flexmock(config).should_receive(:filename).returns('033fc4385c83dd48a34480eb8e8d8a03.png')
-    flexmock(config).should_receive(:path).with('033fc4385c83dd48a34480eb8e8d8a03.png').returns('/home/www/gyazo_server/images/161104/033fc4385c83dd48a34480eb8e8d8a03.png')
     post '/upload', "imagedata" => Rack::Test::UploadedFile.new('images/test-image.png', 'image/png')
     assert_equal 200, last_response.status
   end
