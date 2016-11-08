@@ -16,24 +16,3 @@ Rake::TestTask.new do |t|
   t.verbose = false
 end
 
-# RACK_ENV={test|development|production} bundle exec rake db:migrate
-namespace :db do
-  desc 'Run migrations'
-  task :migrate, [:version] do |_t, args|
-    require 'sequel'
-    require 'yaml'
-    config ||= YAML.load_file('config.yml')
-    db_config = ENV['RACK_ENV']
-    dsn = config[db_config]['dsn']
-
-    Sequel.extension :migration
-    db = Sequel.connect(dsn)
-    if args[:version]
-      puts "Migrating to version #{arg[:version]}"
-      Sequel::Migrator.run(db, 'migrations', target: args[:version].to_i)
-    else
-      puts 'Migrating to latest'
-      Sequel::Migrator.run(db, 'migrations')
-    end
-  end
-end
