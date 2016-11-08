@@ -19,7 +19,7 @@ class TestApplication < SinatraApp::Test
     assert_equal 200, last_response.status
   end
 
-  def test_post_failure_the_image
+  def test_no_post_image_failure_upload
     post '/upload'
     assert_equal 500, last_response.status
   end
