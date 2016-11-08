@@ -1,5 +1,4 @@
-# sinatra 
-This is skelton of sinatra 
+# Applications like gyazo
 
 ## start
 bundle exec rackup
