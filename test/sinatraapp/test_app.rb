@@ -10,10 +10,6 @@ class TestApplication < SinatraApp::Test
     @app
   end
 
-  def config
-    @config
-  end
-  
   def test_get_index
     get '/'
     assert_equal 200, last_response.status

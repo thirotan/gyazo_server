@@ -4,4 +4,4 @@ Gemfile.lock
 config.yml
 coverage/*
 logs/*
-
+images/*

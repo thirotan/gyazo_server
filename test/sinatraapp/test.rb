@@ -13,7 +13,6 @@ module SinatraApp
   class Test < Test::Unit::TestCase
     def setup
       @app = SinatraApp::Application
-      @config = SinatraApp::Config.new
     end
   end
 end
