@@ -11,7 +11,7 @@ gem 'rubocop'
 group :test do
   gem 'rake'
   gem 'webmock'
-  gem 'flexmock'
+  gem 'mocha'
   gem 'simplecov'
   gem 'test-unit'
 end

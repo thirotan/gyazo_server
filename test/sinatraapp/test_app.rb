@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require 'sinatraapp/test'
-require 'flexmock/test_unit'
 
 
 class TestApplication < SinatraApp::Test
   include Rack::Test::Methods
+  
   def app
     @app
   end

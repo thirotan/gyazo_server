@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'sinatra/base'
-require 'sinatra/contrib'
+require 'sinatra/contrib' 
 require 'erubis'
 
 require 'date'
@@ -79,8 +79,7 @@ module SinatraApp
     end
 
     post '/upload' do
-      file = filename
-      current_path = path(filename: file)
+      current_path = path(filename: filename)
       make_dir(path: current_path)
       upload(upload_file: request[:imagedata][:tempfile].path, path: current_path)
   
