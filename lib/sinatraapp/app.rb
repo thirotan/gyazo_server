@@ -4,12 +4,16 @@ require 'sinatra/base'
 require 'sinatra/contrib'
 require 'erubis'
 
+require 'date'
+require 'fileutils'
+require 'digest'
+require 'yaml'
 
-require 'sinatraapp/config'
 require 'sinatraapp/helper'
 
 module SinatraApp
   class Application < Sinatra::Base
+    CONFIG = YAML.load_file(File.dirname(__FILE__) + '/../../config.yml')
     configure do
       set :root, File.dirname(__FILE__) + '/../../'
       set :erb, escape_html: true
@@ -28,14 +32,38 @@ module SinatraApp
       include SinatraApp::Helper
     end
 
-    def config
-      config ||= SinatraApp::Config.new
+    def url
+      CONFIG['server']['url']
     end
+
+    def basedir
+      CONFIG['server']['basedir']
+    end
+
+    def dirname
+      Date.today.strftime("%y%m%d")
+    end
+
+    def make_dir(path:)
+      dir = File.dirname(path)
+      unless File.directory?(dir)
+        FileUtils.mkdir_p(dir)
+      end
+    end
+
+    def filename
+      md5 = Digest::MD5.new
+      md5.update((Time.now.to_i + :gyazo.object_id + rand(2^16)).to_s).hexdigest + '.png'
+    end
+
+    def path(filename:)
+      File.join(basedir, dirname, filename)
+    end
+
 
     def upload(upload_file:, path:)
       FileUtils.cp(upload_file, path)
     end
-
 
     not_found do 
       status 404
@@ -47,18 +75,18 @@ module SinatraApp
     end
 
     get '/images/:dir/:name' do
-      send_file File.join(config.basedir, 'images',  params[:dir], params[:name])
+      send_file File.join(basedir, 'images',  params[:dir], params[:name])
     end
 
     post '/upload' do
-      filename = config.filename
-      path = config.path(filename: filename)
-      config.make_dir(path: path)
-      upload(upload_file: request[:imagedata][:tempfile].path, path: path)
+      file = filename
+      current_path = path(filename: file)
+      make_dir(path: current_path)
+      upload(upload_file: request[:imagedata][:tempfile].path, path: current_path)
   
       status 200
       headers 'Content-Type' => 'text/plain'
-      body "#{config.url}/images/#{filename}"
+      body "#{url}/images/#{filename}"
     end
 
   end
