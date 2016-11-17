@@ -3,7 +3,6 @@
 require 'rake/testtask'
 require 'rubocop/rake_task'
 
-Rake::TestTask.new
 
 task default: [:test]
 
